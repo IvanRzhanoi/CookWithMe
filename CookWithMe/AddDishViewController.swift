@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 import FirebaseStorage
 
 class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -14,6 +15,7 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var dishImageView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var tagsTextField: UITextField!
+    @IBOutlet weak var diffultyTextField: UITextField!
     @IBOutlet weak var ingredientsTextView: UITextView!
     @IBOutlet weak var instructionsTextView: UITextView!
     
@@ -66,6 +68,11 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
             return
         }
         
+        guard let difficulty = Int(diffultyTextField.text!) else {
+            displayAlertMessage(messageToDisplay: "Please tell how difficult is your dish")
+            return
+        }
+        
         guard let ingredientsUsed = ingredientsTextView.text else {
             displayAlertMessage(messageToDisplay: "Please list the ingredients")
             return
@@ -82,55 +89,36 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         // Creating storage reference for the storage service
         let storageReference = storage.reference()
-        var imageReference = storageReference.child("images/\(dishName).jpeg")
+        let imageReference = storageReference.child("images/\(dishName).jpeg")
         _ = imageReference.putData(data, metadata: nil, completion: { (metadata, error) in
-            guard let metadata = metadata else {
+            guard metadata != nil else {
                 self.displayAlertMessage(messageToDisplay: error as! String)
                 return
             }
             
-            // URL for the saved image
+            // Image Reference, URL for the saved image
             storageReference.downloadURL(completion: { (url, error) in
                 guard let downloadURL = url else {
                     self.displayAlertMessage(messageToDisplay: "Couldn't properly load the image")
                     return
                 }
                 
-                self.setDish()
+                self.uploadDish(name: dishName, imageReference: downloadURL, tagsString: tagsUsed, difficulty: difficulty, ingredientsString: ingredientsUsed, instructions: instructionsUsed)
             })
         })
-        
-        
-        
-        if let imageData = UIImageJPEGRepresentation(image, 0.4) {
-            let imageUID = NSUUID().uuidString
-            let metadata = StorageMetadata()
-            metadata.contentType = "image/jpeg"
-            let storageItem = Storage.storage().reference().child(imageUID)
-            storageItem.putData(imageData, metadata: metadata) { (metadata, error) in
-                if error != nil {
-                    print("did not upload image")
-                    self.displayAlertMessage(messageToDisplay: "Did not upload the image")
-                } else {
-                    print("uploaded")
-                    storageItem.downloadURL(completion: { (url, error) in
-                        if error != nil {
-                            //                            print(error!)
-                            self.displayAlertMessage(messageToDisplay: error as! String)
-                            return
-                        }
-                        if url != nil {
-                            self.setupUser(imageURL: url!.absoluteString)
-                            self.dismiss(animated: true, completion: nil)
-                        }
-                    })
-                }
-            }
-        }
     }
     
-    func uploadDish() {
+    func uploadDish(name: String, imageReference: URL, tagsString: String, difficulty: Int, ingredientsString: String, instructions: String) {
+        let collection = Firestore.firestore().collection("dishes")
         
+        // Splitting
+        let tags = tagsString.components(separatedBy: " ")
+        let ingredients = ingredientsString.components(separatedBy: CharacterSet.newlines)
+        
+        
+        let dish = Dish(name: name, imageReference: imageReference, tags: tags, difficulty: difficulty, averageRating: nil, ingredients: ingredients, instructions: instructions)
+        
+        collection.addDocument(data: dish.dictionary)
     }
     
     func displayAlertMessage(messageToDisplay: String) {
