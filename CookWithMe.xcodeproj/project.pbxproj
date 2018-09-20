@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1EE3A3B33E3A4D88AD0F813A /* Pods_CookWithMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798164FE3B7EA43B16755B7C /* Pods_CookWithMe.framework */; };
 		225B2C0121523011008CB82B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225B2C0021523011008CB82B /* AppDelegate.swift */; };
 		225B2C0321523011008CB82B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225B2C0221523011008CB82B /* ViewController.swift */; };
 		225B2C0621523011008CB82B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 225B2C0421523011008CB82B /* Main.storyboard */; };
@@ -24,6 +25,9 @@
 		225B2C0A21523015008CB82B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		225B2C0C21523015008CB82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22ADC822215388B200A8C760 /* Dish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dish.swift; sourceTree = "<group>"; };
+		798164FE3B7EA43B16755B7C /* Pods_CookWithMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CookWithMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE35D9DE6F1E78C389049192 /* Pods-CookWithMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CookWithMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-CookWithMe/Pods-CookWithMe.release.xcconfig"; sourceTree = "<group>"; };
+		D679FC8472B1E30DFAC89E48 /* Pods-CookWithMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CookWithMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CookWithMe/Pods-CookWithMe.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EE3A3B33E3A4D88AD0F813A /* Pods_CookWithMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +47,8 @@
 			children = (
 				225B2BFF21523011008CB82B /* CookWithMe */,
 				225B2BFE21523011008CB82B /* Products */,
+				EE225224D375BCC5C3CF8F57 /* Pods */,
+				51B72D35BF9F3833DBAAD4AD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +74,23 @@
 			path = CookWithMe;
 			sourceTree = "<group>";
 		};
+		51B72D35BF9F3833DBAAD4AD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				798164FE3B7EA43B16755B7C /* Pods_CookWithMe.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EE225224D375BCC5C3CF8F57 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D679FC8472B1E30DFAC89E48 /* Pods-CookWithMe.debug.xcconfig */,
+				AE35D9DE6F1E78C389049192 /* Pods-CookWithMe.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,6 +98,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 225B2C0F21523015008CB82B /* Build configuration list for PBXNativeTarget "CookWithMe" */;
 			buildPhases = (
+				9C0FE4E960ADE4F93A68A137 /* [CP] Check Pods Manifest.lock */,
 				225B2BF921523011008CB82B /* Sources */,
 				225B2BFA21523011008CB82B /* Frameworks */,
 				225B2BFB21523011008CB82B /* Resources */,
@@ -132,6 +157,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9C0FE4E960ADE4F93A68A137 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CookWithMe-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		225B2BF921523011008CB82B /* Sources */ = {
@@ -282,6 +328,7 @@
 		};
 		225B2C1021523015008CB82B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D679FC8472B1E30DFAC89E48 /* Pods-CookWithMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -300,6 +347,7 @@
 		};
 		225B2C1121523015008CB82B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AE35D9DE6F1E78C389049192 /* Pods-CookWithMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
