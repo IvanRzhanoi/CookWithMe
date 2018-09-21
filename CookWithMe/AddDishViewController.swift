@@ -10,21 +10,25 @@ import UIKit
 import FirebaseFirestore
 import FirebaseStorage
 
-class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     @IBOutlet weak var dishImageView: UIImageView!
+    @IBOutlet weak var toolBarBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var tagsTextField: UITextField!
-    @IBOutlet weak var diffultyTextField: UITextField!
+    @IBOutlet weak var difficultyTextField: UITextField!
     @IBOutlet weak var ingredientsTextView: UITextView!
     @IBOutlet weak var instructionsTextView: UITextView!
     
-//    var userUID: String!
-//    var emailText: String!
-//    var passwordText: String!
+    let loadingView = UIView()
+    let activityIndicator = UIActivityIndicatorView()
+    let loadingLabel = UILabel()
     var imagePicker: UIImagePickerController!
-//    var username: String!
-
+    var difficultyPicker: UIPickerView!
+    
+    let difficultyPickerValues = ["1", "2", "3", "4", "5"]
+    let ingredientsPlaceholder = "Add ingredients with new lines \nlike this"
+    let instructionsPlaceholder = "Add instructions for preparing your meal\nwith new lines as well"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +37,27 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
+        
+        difficultyPicker = UIPickerView()
+        
+        difficultyPicker.dataSource = self
+        difficultyPicker.delegate = self
+        
+        difficultyTextField.inputView = difficultyPicker
+        difficultyTextField.text = difficultyPickerValues[0]
+        
+        ingredientsTextView.delegate = self
+        instructionsTextView.delegate = self
+        ingredientsTextView.text = ingredientsPlaceholder
+        instructionsTextView.text = instructionsPlaceholder
+        ingredientsTextView.textColor = UIColor.lightGray
+        instructionsTextView.textColor = UIColor.lightGray
+        
+        ingredientsTextView.selectedTextRange = ingredientsTextView.textRange(from: ingredientsTextView.beginningOfDocument, to: ingredientsTextView.beginningOfDocument)
+        instructionsTextView.selectedTextRange = instructionsTextView.textRange(from: instructionsTextView.beginningOfDocument, to: instructionsTextView.beginningOfDocument)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(AddDishViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddDishViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,11 +73,99 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
             displayAlertMessage(messageToDisplay: "Image was not selected")
         }
         
+        picker.dismiss(animated: true, completion: nil)
+        guard let image = info[UIImagePickerControllerEditedImage] as? UIImage else {
+            print("No image found")
+            return
+        }
+        
+        // print out the image size as a test
+        print(image.size)
+        
         imagePicker.dismiss(animated: true, completion: nil)
     }
     
-    func uploadImage() {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return difficultyPickerValues.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return difficultyPickerValues[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
+        difficultyTextField.text = difficultyPickerValues[row]
+        self.view.endEditing(true)
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
+        // Combine the textView text and the replacement text to
+        // create the updated text string
+        let currentText:String = textView.text
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        
+        // If updated text view will be empty, add the placeholder
+        // and set the cursor to the beginning of the text view
+        if updatedText.isEmpty {
+            
+            textView.text = "Placeholder"
+            textView.textColor = UIColor.lightGray
+            
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+        }
+            
+            // Else if the text view's placeholder is showing and the
+            // length of the replacement string is greater than 0, set
+            // the text color to black then set its text to the
+            // replacement string
+        else if textView.textColor == UIColor.lightGray && !text.isEmpty {
+            textView.textColor = UIColor.black
+            textView.text = text
+        }
+            
+            // For every other case, the text should change with the usual
+            // behavior...
+        else {
+            return true
+        }
+        
+        // ...otherwise return false since the updates have already
+        // been made
+        return false
+    }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if self.view.window != nil {
+            if textView.textColor == UIColor.lightGray {
+                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            }
+        }
+    }
+
+    @objc func keyboardWillShow(notify: NSNotification) {
+        if let userInfo = notify.userInfo {
+            let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect
+
+            UIView.animate(withDuration: 5) {
+                self.toolBarBottomConstraint.constant = -keyboardFrame!.height
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notify: NSNotification) {
+        UIView.animate(withDuration: 5) {
+            self.toolBarBottomConstraint.constant = 0
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func uploadImage() {
         guard let dishName = nameTextField.text else {
             displayAlertMessage(messageToDisplay: "Please give your dish a name")
             return
@@ -68,7 +181,7 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
             return
         }
         
-        guard let difficulty = Int(diffultyTextField.text!) else {
+        guard let difficulty = Int(difficultyTextField.text!) else {
             displayAlertMessage(messageToDisplay: "Please tell how difficult is your dish")
             return
         }
@@ -92,7 +205,8 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         let imageReference = storageReference.child("images/\(dishName).jpeg")
         _ = imageReference.putData(data, metadata: nil, completion: { (metadata, error) in
             guard metadata != nil else {
-                self.displayAlertMessage(messageToDisplay: error as! String)
+//                self.displayAlertMessage(messageToDisplay: error as! String)
+                self.displayAlertMessage(messageToDisplay: "Error loading the image")
                 return
             }
             
@@ -103,22 +217,25 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
                     return
                 }
                 
-                self.uploadDish(name: dishName, imageReference: downloadURL, tagsString: tagsUsed, difficulty: difficulty, ingredientsString: ingredientsUsed, instructions: instructionsUsed)
+                self.uploadDish(name: dishName, imageReference: downloadURL, tagsString: tagsUsed, difficulty: difficulty, ingredientsString: ingredientsUsed, instructionsString: instructionsUsed)
             })
         })
     }
     
-    func uploadDish(name: String, imageReference: URL, tagsString: String, difficulty: Int, ingredientsString: String, instructions: String) {
+    func uploadDish(name: String, imageReference: URL, tagsString: String, difficulty: Int, ingredientsString: String, instructionsString: String) {
         let collection = Firestore.firestore().collection("dishes")
         
         // Splitting
-        let tags = tagsString.components(separatedBy: " ")
+//        let tags = tagsString.components(separatedBy: " ")
+        let tags = tagsString.hashtags()
         let ingredients = ingredientsString.components(separatedBy: CharacterSet.newlines)
-        
+        let instructions = instructionsString.components(separatedBy: CharacterSet.newlines)
         
         let dish = Dish(name: name, imageReference: imageReference, tags: tags, difficulty: difficulty, averageRating: nil, ingredients: ingredients, instructions: instructions)
         
         collection.addDocument(data: dish.dictionary)
+
+        
     }
     
     func displayAlertMessage(messageToDisplay: String) {
@@ -133,6 +250,26 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.present(alertController, animated: true, completion:nil)
     }
 
+    @IBAction func takePhoto(_ sender: Any) {
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.allowsEditing = true
+        vc.delegate = self
+        present(vc, animated: true)
+    }
+    
+    @IBAction func pickPhoto(_ sender: Any) {
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    @IBAction func dismissKeyboard(_ sender: Any) {
+        view.endEditing(true)
+    }
+    
+    @IBAction func uploadDish(_ sender: Any) {
+        // TODO: Rename code flow to more reasonable
+        uploadImage()
+    }
     /*
     // MARK: - Navigation
 
@@ -143,4 +280,16 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     */
 
+}
+
+extension String {
+    func hashtags() -> [String] {
+        if let regex = try? NSRegularExpression(pattern: "#[a-z0-9]+", options: .caseInsensitive) {
+            let string = self as NSString
+            return regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).map {
+                string.substring(with: $0.range).replacingOccurrences(of: "#", with: "").lowercased()
+            }
+        }
+        return []
+    }
 }

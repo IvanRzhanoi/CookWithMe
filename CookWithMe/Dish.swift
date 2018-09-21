@@ -20,7 +20,7 @@ struct Dish {
     var difficulty: Int
     var averageRating: Float?
     var ingredients: [String]
-    var instructions: String
+    var instructions: [String]
     
     var dictionary: [String: Any] {
         return [
@@ -42,7 +42,7 @@ extension Dish: DocumentSerializable {
         let tags = dictionary["tags"] as? [String],
         let difficulty = dictionary["difficulty"] as? Int,
         let ingredients = dictionary["ingredients"] as? [String],
-        let instructions = dictionary["instructions"] as? String else {
+        let instructions = dictionary["instructions"] as? [String] else {
             return nil
         }
         
