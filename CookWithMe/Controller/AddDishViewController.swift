@@ -57,6 +57,13 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         NotificationCenter.default.addObserver(self, selector: #selector(AddDishViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(AddDishViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        self.ingredientsTextView.layer.borderColor = UIColor.gray.cgColor
+        self.ingredientsTextView.layer.borderWidth = 0.8
+        self.ingredientsTextView.layer.cornerRadius = 8
+        self.instructionsTextView.layer.borderColor = UIColor.gray.cgColor
+        self.instructionsTextView.layer.borderWidth = 0.8
+        self.instructionsTextView.layer.cornerRadius = 8
     }
 
     override func didReceiveMemoryWarning() {
@@ -198,33 +205,62 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
             return
         }
         
-        let storage = Storage.storage()
-        var data = Data()
-        data = UIImageJPEGRepresentation(image, 0.4)!
+//        let storage = Storage.storage()
+//        var data = Data()
+//        data = UIImageJPEGRepresentation(image, 0.4)!
         
         // Creating storage reference for the storage service
-        let storageReference = storage.reference()
-        let imageReference = storageReference.child("images/\(dishName).jpeg")
-        _ = imageReference.putData(data, metadata: nil, completion: { (metadata, error) in
-            guard metadata != nil else {
-//                self.displayAlertMessage(messageToDisplay: error as! String)
-                self.displayAlertMessage(messageToDisplay: "Error loading the image")
-                return
-            }
-            
-            // Image Reference, URL for the saved image
-            storageReference.downloadURL(completion: { (url, error) in
-                guard let downloadURL = url else {
-                    self.displayAlertMessage(messageToDisplay: "Couldn't properly load the image")
-                    return
+//        let storageReference = storage.reference()
+//        let imageReference = storageReference.child("images/\(dishName).jpeg")
+//        _ = imageReference.putData(data, metadata: nil, completion: { (metadata, error) in
+//            guard metadata != nil else {
+////                self.displayAlertMessage(messageToDisplay: error as! String)
+//                self.displayAlertMessage(messageToDisplay: "Error loading the image")
+//                return
+//            }
+//
+//            // Image Reference, URL for the saved image
+//            storageReference.downloadURL(completion: { (url, error) in
+//                guard let downloadURL = url else {
+//                    self.displayAlertMessage(messageToDisplay: "Couldn't properly load the image")
+//                    return
+//                }
+//
+//                self.uploadDish(name: dishName, imageReference: downloadURL.absoluteString, tagsString: tagsUsed, difficulty: difficulty, ingredientsString: ingredientsUsed, instructionsString: instructionsUsed)
+//            })
+//        })
+        
+        
+        
+        if let imageData = UIImageJPEGRepresentation(image, 0.4) {
+            let imageUID = NSUUID().uuidString
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+            let storageItem = Storage.storage().reference().child(imageUID)
+            storageItem.putData(imageData, metadata: metadata) { (metadata, error) in
+                if error != nil {
+                    print("did not upload image")
+                    self.displayAlertMessage(messageToDisplay: "Did not upload the image")
+                } else {
+                    print("uploaded")
+                    storageItem.downloadURL(completion: { (url, error) in
+                        if error != nil {
+                            print(error!)
+//                            self.displayAlertMessage(messageToDisplay: error as! String)
+                            self.displayAlertMessage(messageToDisplay: "Couldn't properly load the image")
+                            return
+                        }
+                        if url != nil {
+//                            self.setupUser(imageURL: url!.absoluteString)
+                            self.uploadDish(name: dishName, imageReference: (url?.absoluteString)!, tagsString: tagsUsed, difficulty: difficulty, ingredientsString: ingredientsUsed, instructionsString: instructionsUsed)
+                        }
+                    })
                 }
-                
-                self.uploadDish(name: dishName, imageReference: downloadURL, tagsString: tagsUsed, difficulty: difficulty, ingredientsString: ingredientsUsed, instructionsString: instructionsUsed)
-            })
-        })
+            }
+        }
     }
     
-    func uploadDish(name: String, imageReference: URL, tagsString: String, difficulty: Int, ingredientsString: String, instructionsString: String) {
+    func uploadDish(name: String, imageReference: String, tagsString: String, difficulty: Int, ingredientsString: String, instructionsString: String) {
         let collection = Firestore.firestore().collection("dishes")
         
         // Splitting
@@ -236,8 +272,7 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         let dish = Dish(name: name, imageReference: imageReference, tags: tags, difficulty: difficulty, averageRating: nil, ingredients: ingredients, instructions: instructions)
         
         collection.addDocument(data: dish.dictionary)
-
-        
+        self.navigationController?.popViewController(animated: true)
     }
     
     func displayAlertMessage(messageToDisplay: String) {

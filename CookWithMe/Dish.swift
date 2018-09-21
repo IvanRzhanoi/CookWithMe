@@ -15,7 +15,7 @@ protocol DocumentSerializable {
 
 struct Dish {
     var name: String
-    var imageReference: URL
+    var imageReference: String
     var tags: [String]
     var difficulty: Int
     var averageRating: Float?
@@ -38,7 +38,7 @@ struct Dish {
 extension Dish: DocumentSerializable {
     init?(dictionary: [String: Any]) {
         guard let name = dictionary["name"] as? String,
-        let imageReference = dictionary["imageReference"] as? URL,
+        let imageReference = dictionary["imageReference"] as? String,
         let tags = dictionary["tags"] as? [String],
         let difficulty = dictionary["difficulty"] as? Int,
         let ingredients = dictionary["ingredients"] as? [String],

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 class DishBrowserTableViewController: UITableViewController {
 
@@ -67,7 +68,11 @@ class DishBrowserTableViewController: UITableViewController {
     }
     
     @IBAction func addDish(_ sender: Any) {
-        performSegue(withIdentifier: "toLogin", sender: nil)
+        if let _ = KeychainWrapper.standard.string(forKey: "uid") {
+            performSegue(withIdentifier: "toDishUpload", sender: nil)
+        } else {
+            performSegue(withIdentifier: "toLogin", sender: nil)
+        }
     }
     
     /*

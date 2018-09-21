@@ -110,8 +110,11 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="difficulty" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fIP-Oh-Ul6">
-                                        <rect key="frame" x="96" y="529" width="183" height="30"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="difficulty" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fIP-Oh-Ul6">
+                                        <rect key="frame" x="151.66666666666666" y="529" width="72" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="72" id="NIl-xi-gEM"/>
+                                        </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -159,7 +162,7 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="B3X-jb-ayi" secondAttribute="trailing" constant="16" id="0Rc-yB-za8"/>
                                     <constraint firstItem="oU3-Vw-bGX" firstAttribute="leading" secondItem="Hpi-N3-Kgs" secondAttribute="leading" constant="16" id="4cS-P9-zGX"/>
-                                    <constraint firstItem="fIP-Oh-Ul6" firstAttribute="leading" secondItem="Hpi-N3-Kgs" secondAttribute="leading" constant="96" id="7Ie-wZ-NPI"/>
+                                    <constraint firstItem="fIP-Oh-Ul6" firstAttribute="centerX" secondItem="Hpi-N3-Kgs" secondAttribute="centerX" id="Azt-on-Yht"/>
                                     <constraint firstItem="1dK-PI-MlQ" firstAttribute="leading" secondItem="Hpi-N3-Kgs" secondAttribute="leading" constant="16" id="HJJ-si-88o"/>
                                     <constraint firstItem="kFA-2i-ikb" firstAttribute="top" secondItem="Hpi-N3-Kgs" secondAttribute="top" id="I1o-cq-HDV"/>
                                     <constraint firstItem="kFA-2i-ikb" firstAttribute="width" secondItem="Hpi-N3-Kgs" secondAttribute="width" id="NX7-N3-PPW"/>
@@ -174,7 +177,6 @@
                                     <constraint firstItem="oU3-Vw-bGX" firstAttribute="top" secondItem="IdM-WW-Ki8" secondAttribute="bottom" constant="16" id="mF8-Xa-4JQ"/>
                                     <constraint firstAttribute="trailing" secondItem="kFA-2i-ikb" secondAttribute="trailing" id="ouU-c6-CKI"/>
                                     <constraint firstItem="2Hr-Ld-e5p" firstAttribute="top" secondItem="kFA-2i-ikb" secondAttribute="bottom" constant="16" id="pTX-Hs-z9y"/>
-                                    <constraint firstAttribute="trailing" secondItem="fIP-Oh-Ul6" secondAttribute="trailing" constant="96" id="sX1-z3-XEt"/>
                                     <constraint firstItem="IdM-WW-Ki8" firstAttribute="leading" secondItem="Hpi-N3-Kgs" secondAttribute="leading" constant="16" id="v92-0n-uHD"/>
                                     <constraint firstAttribute="trailing" secondItem="1dK-PI-MlQ" secondAttribute="trailing" constant="16" id="viX-h2-v84"/>
                                     <constraint firstItem="B3X-jb-ayi" firstAttribute="top" secondItem="2Hr-Ld-e5p" secondAttribute="bottom" constant="16" id="wbm-DE-hHU"/>
@@ -358,9 +360,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NNC-sZ-QXo">
                                 <rect key="frame" x="134" y="635" width="107" height="30"/>
-                                <state key="normal" title="Create Account">
-                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
+                                <state key="normal" title="Create Account"/>
                                 <connections>
                                     <action selector="createAccount:" destination="ew1-NJ-S5w" eventType="touchUpInside" id="NVd-LZ-Vg3"/>
                                 </connections>

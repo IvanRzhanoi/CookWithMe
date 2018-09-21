@@ -27,7 +27,6 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
     var emailText: String!
     var passwordText: String!
     var imagePicker: UIImagePickerController!
-    var isImageSelected = false
     var username: String!
     
     override func viewDidLoad() {
@@ -72,11 +71,8 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         ]
         
         KeychainWrapper.standard.set(userUID, forKey: "uid")
-        let location = Database.database().reference().child("users").child(userUID)
-        location.setValue(userData)
-        
-        let collection = Firestore.firestore().collection("restaurants")
-        collection.addDocument(data: restaurant.dictionary)
+        let collection = Firestore.firestore().collection("users")
+        collection.addDocument(data: userData)
         dismiss(animated: true, completion: nil)
     }
     
@@ -106,7 +102,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
             signupButton.isEnabled = true
         }
         
-        guard let image = userImageView.image, isImageSelected == true else {
+        guard let image = userImageView.image else {
             print("Image needs to be selected")
             displayAlertMessage(messageToDisplay: "An image needs to be selected")
             return
@@ -198,6 +194,8 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         loadingLabel.isHidden = true
     }
     
+    // TODO: Check if user authenticated, but didn't upload the image
+    // For example if internet connections was cut
     @IBAction func createAccount(_ sender: Any) {
         Auth.auth().createUser(withEmail: emailText, password: passwordText, completion: { (user, error) in
             if error != nil {
@@ -220,10 +218,9 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
                         self.navigationController?.popViewController(animated: true)
                         self.dismiss(animated: true, completion: nil)
                     })
+                    self.uploadImage()
                 }
             }
-            
-            self.uploadImage()
         })
     }
     

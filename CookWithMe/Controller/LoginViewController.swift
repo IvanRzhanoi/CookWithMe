@@ -106,8 +106,7 @@ class LoginViewController: UIViewController {
                 if error == nil {
                     self.userUID = user?.user.uid
                     KeychainWrapper.standard.set(self.userUID, forKey: "uid")
-                    //
-                    self.performSegue(withIdentifier: "toMessages", sender: nil)
+                    self.dismiss(animated: true, completion: nil)
                 } else {
                     if let errorCode = AuthErrorCode(rawValue: error!._code) {
                         switch errorCode {
