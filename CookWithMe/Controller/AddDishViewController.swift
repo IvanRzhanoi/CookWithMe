@@ -13,12 +13,12 @@ import FirebaseStorage
 class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     @IBOutlet weak var dishImageView: UIImageView!
-    @IBOutlet weak var toolBarBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var tagsTextField: UITextField!
     @IBOutlet weak var difficultyTextField: UITextField!
     @IBOutlet weak var ingredientsTextView: UITextView!
     @IBOutlet weak var instructionsTextView: UITextView!
+    @IBOutlet weak var toolBarBottomConstraint: NSLayoutConstraint!
     
     let loadingView = UIView()
     let activityIndicator = UIActivityIndicatorView()
@@ -39,7 +39,6 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         imagePicker.allowsEditing = true
         
         difficultyPicker = UIPickerView()
-        
         difficultyPicker.dataSource = self
         difficultyPicker.delegate = self
         
@@ -112,10 +111,13 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         // If updated text view will be empty, add the placeholder
         // and set the cursor to the beginning of the text view
         if updatedText.isEmpty {
+            if textView == ingredientsTextView {
+                textView.text = ingredientsPlaceholder
+            } else {
+                textView.text = instructionsPlaceholder
+            }
             
-            textView.text = "Placeholder"
             textView.textColor = UIColor.lightGray
-            
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
         }
             

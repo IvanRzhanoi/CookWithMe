@@ -66,7 +66,10 @@ class DishBrowserTableViewController: UITableViewController {
         }    
     }
     
-
+    @IBAction func addDish(_ sender: Any) {
+        performSegue(withIdentifier: "toLogin", sender: nil)
+    }
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {

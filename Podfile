@@ -11,7 +11,9 @@ target 'CookWithMe' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
+  #pod 'Firebase/Database'
   pod 'Firebase/Firestore'
+  pod 'SwiftKeychainWrapper'
   
   #pod 'Firestore', :podspec => 'https://storage.googleapis.com/firebase-preview-drop/ios/firestore/0.7.0/Firestore.podspec.json'
 end

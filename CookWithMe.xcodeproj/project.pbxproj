@@ -17,6 +17,8 @@
 		22ADC8262153980900A8C760 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22ADC8252153980900A8C760 /* Assets.xcassets */; };
 		22ADC8282153A4BA00A8C760 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22ADC8272153A4BA00A8C760 /* GoogleService-Info.plist */; };
 		22ADC82A2153AFF900A8C760 /* DishBrowserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ADC8292153AFF900A8C760 /* DishBrowserTableViewController.swift */; };
+		22BA14E621553A4B00EEA94C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA14E521553A4B00EEA94C /* LoginViewController.swift */; };
+		22BA14E821553A6000EEA94C /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA14E721553A6000EEA94C /* SignupViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		22ADC8252153980900A8C760 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22ADC8272153A4BA00A8C760 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		22ADC8292153AFF900A8C760 /* DishBrowserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishBrowserTableViewController.swift; sourceTree = "<group>"; };
+		22BA14E521553A4B00EEA94C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		22BA14E721553A6000EEA94C /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		798164FE3B7EA43B16755B7C /* Pods_CookWithMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CookWithMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE35D9DE6F1E78C389049192 /* Pods-CookWithMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CookWithMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-CookWithMe/Pods-CookWithMe.release.xcconfig"; sourceTree = "<group>"; };
 		D679FC8472B1E30DFAC89E48 /* Pods-CookWithMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CookWithMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CookWithMe/Pods-CookWithMe.debug.xcconfig"; sourceTree = "<group>"; };
@@ -69,7 +73,7 @@
 		225B2BFF21523011008CB82B /* CookWithMe */ = {
 			isa = PBXGroup;
 			children = (
-				22ADC82421538CDB00A8C760 /* Dish browser */,
+				22BA14E421553A2700EEA94C /* Controller */,
 				225B2C0021523011008CB82B /* AppDelegate.swift */,
 				225B2C0221523011008CB82B /* ViewController.swift */,
 				22ADC8252153980900A8C760 /* Assets.xcassets */,
@@ -77,18 +81,20 @@
 				225B2C0921523015008CB82B /* LaunchScreen.storyboard */,
 				225B2C0C21523015008CB82B /* Info.plist */,
 				22ADC8272153A4BA00A8C760 /* GoogleService-Info.plist */,
-				220197282153FD7C0002B6BE /* AddDishViewController.swift */,
 				22ADC822215388B200A8C760 /* Dish.swift */,
 			);
 			path = CookWithMe;
 			sourceTree = "<group>";
 		};
-		22ADC82421538CDB00A8C760 /* Dish browser */ = {
+		22BA14E421553A2700EEA94C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				22BA14E521553A4B00EEA94C /* LoginViewController.swift */,
+				22BA14E721553A6000EEA94C /* SignupViewController.swift */,
 				22ADC8292153AFF900A8C760 /* DishBrowserTableViewController.swift */,
+				220197282153FD7C0002B6BE /* AddDishViewController.swift */,
 			);
-			path = "Dish browser";
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		51B72D35BF9F3833DBAAD4AD /* Frameworks */ = {
@@ -189,6 +195,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
@@ -202,6 +209,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
@@ -239,6 +247,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22BA14E621553A4B00EEA94C /* LoginViewController.swift in Sources */,
+				22BA14E821553A6000EEA94C /* SignupViewController.swift in Sources */,
 				22ADC823215388B200A8C760 /* Dish.swift in Sources */,
 				225B2C0321523011008CB82B /* ViewController.swift in Sources */,
 				22ADC82A2153AFF900A8C760 /* DishBrowserTableViewController.swift in Sources */,
