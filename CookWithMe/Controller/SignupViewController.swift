@@ -16,7 +16,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var userTextField: UITextField!
     @IBOutlet weak var signupButton: UIButton!
-    @IBOutlet weak var toolBarBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var buttonsBottomConstraint: NSLayoutConstraint!
     
     let generalView = UIView()
     let loadingView = UIView()
@@ -81,7 +81,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
             let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect
             
             UIView.animate(withDuration: 5) {
-                self.toolBarBottomConstraint.constant = -keyboardFrame!.height
+                self.buttonsBottomConstraint.constant = -keyboardFrame!.height
                 self.view.layoutIfNeeded()
             }
         }
@@ -89,7 +89,7 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     @objc func keyboardWillHide(notify: NSNotification) {
         UIView.animate(withDuration: 5) {
-            self.toolBarBottomConstraint.constant = 0
+            self.buttonsBottomConstraint.constant = 0
             self.view.layoutIfNeeded()
         }
     }

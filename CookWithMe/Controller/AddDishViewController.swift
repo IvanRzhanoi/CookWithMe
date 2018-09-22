@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseStorage
+import SwiftKeychainWrapper
 
 class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
@@ -180,6 +181,11 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
             return
         }
         
+        guard let uid = KeychainWrapper.standard.string(forKey: "uid") else {
+            displayAlertMessage(messageToDisplay: "Couldn't get your used identification. Maybe you are not logged in")
+            return
+        }
+        
         guard let image = dishImageView.image else {
             displayAlertMessage(messageToDisplay: "An image needs to be selected")
             return
@@ -205,33 +211,6 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
             return
         }
         
-//        let storage = Storage.storage()
-//        var data = Data()
-//        data = UIImageJPEGRepresentation(image, 0.4)!
-        
-        // Creating storage reference for the storage service
-//        let storageReference = storage.reference()
-//        let imageReference = storageReference.child("images/\(dishName).jpeg")
-//        _ = imageReference.putData(data, metadata: nil, completion: { (metadata, error) in
-//            guard metadata != nil else {
-////                self.displayAlertMessage(messageToDisplay: error as! String)
-//                self.displayAlertMessage(messageToDisplay: "Error loading the image")
-//                return
-//            }
-//
-//            // Image Reference, URL for the saved image
-//            storageReference.downloadURL(completion: { (url, error) in
-//                guard let downloadURL = url else {
-//                    self.displayAlertMessage(messageToDisplay: "Couldn't properly load the image")
-//                    return
-//                }
-//
-//                self.uploadDish(name: dishName, imageReference: downloadURL.absoluteString, tagsString: tagsUsed, difficulty: difficulty, ingredientsString: ingredientsUsed, instructionsString: instructionsUsed)
-//            })
-//        })
-        
-        
-        
         if let imageData = UIImageJPEGRepresentation(image, 0.4) {
             let imageUID = NSUUID().uuidString
             let metadata = StorageMetadata()
@@ -252,7 +231,7 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
                         }
                         if url != nil {
 //                            self.setupUser(imageURL: url!.absoluteString)
-                            self.uploadDish(name: dishName, imageReference: (url?.absoluteString)!, tagsString: tagsUsed, difficulty: difficulty, ingredientsString: ingredientsUsed, instructionsString: instructionsUsed)
+                            self.uploadDish(name: dishName, posterUID: uid, imageReference: (url?.absoluteString)!, tagsString: tagsUsed, difficulty: difficulty, ingredientsString: ingredientsUsed, instructionsString: instructionsUsed)
                         }
                     })
                 }
@@ -260,7 +239,7 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
-    func uploadDish(name: String, imageReference: String, tagsString: String, difficulty: Int, ingredientsString: String, instructionsString: String) {
+    func uploadDish(name: String, posterUID: String, imageReference: String, tagsString: String, difficulty: Int, ingredientsString: String, instructionsString: String) {
         let collection = Firestore.firestore().collection("dishes")
         
         // Splitting
@@ -269,7 +248,7 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         let ingredients = ingredientsString.components(separatedBy: CharacterSet.newlines)
         let instructions = instructionsString.components(separatedBy: CharacterSet.newlines)
         
-        let dish = Dish(name: name, imageReference: imageReference, tags: tags, difficulty: difficulty, averageRating: nil, ingredients: ingredients, instructions: instructions)
+        let dish = Dish(name: name, posterUID: posterUID, imageReference: imageReference, tags: tags, difficulty: difficulty, averageRating: nil, ingredients: ingredients, instructions: instructions)
         
         collection.addDocument(data: dish.dictionary)
         self.navigationController?.popViewController(animated: true)
@@ -307,16 +286,6 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         // TODO: Rename code flow to more reasonable
         uploadImage()
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension String {

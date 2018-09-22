@@ -15,6 +15,7 @@ protocol DocumentSerializable {
 
 struct Dish {
     var name: String
+    var posterUID: String
     var imageReference: String
     var tags: [String]
     var difficulty: Int
@@ -46,8 +47,12 @@ extension Dish: DocumentSerializable {
             return nil
         }
         
-        let averageRating = dictionary["averageRating"] as? Float
+        let posterUID = dictionary["posterUID"] as? String
+        let posterUIDChecked: String = posterUID ?? "none"
         
-        self.init(name: name, imageReference: imageReference, tags: tags, difficulty: difficulty, averageRating: averageRating, ingredients: ingredients, instructions: instructions)
+        let averageRating = dictionary["averageRating"] as? Float
+        let averageRatingChecked: Float = averageRating ?? 2.5
+        
+        self.init(name: name, posterUID: posterUIDChecked, imageReference: imageReference, tags: tags, difficulty: difficulty, averageRating: averageRatingChecked, ingredients: ingredients, instructions: instructions)
     }
 }

@@ -14,7 +14,7 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var toolBarBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var buttonsBottomConstraint: NSLayoutConstraint!
     
     var userUID: String!
     
@@ -42,7 +42,7 @@ class LoginViewController: UIViewController {
             let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect
             
             UIView.animate(withDuration: 5) {
-                self.toolBarBottomConstraint.constant = -keyboardFrame!.height
+                self.buttonsBottomConstraint.constant = -keyboardFrame!.height
                 self.view.layoutIfNeeded()
             }
         }
@@ -50,7 +50,7 @@ class LoginViewController: UIViewController {
     
     @objc func keyboardWillHide(notify: NSNotification) {
         UIView.animate(withDuration: 5) {
-            self.toolBarBottomConstraint.constant = 0
+            self.buttonsBottomConstraint.constant = 0
             self.view.layoutIfNeeded()
         }
     }
