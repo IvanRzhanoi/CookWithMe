@@ -59,11 +59,11 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         NotificationCenter.default.addObserver(self, selector: #selector(AddDishViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(AddDishViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        self.ingredientsTextView.layer.borderColor = UIColor.gray.cgColor
-        self.ingredientsTextView.layer.borderWidth = 0.8
+        self.ingredientsTextView.layer.borderColor = UIColor.lightGray.cgColor
+        self.ingredientsTextView.layer.borderWidth = 0.3
         self.ingredientsTextView.layer.cornerRadius = 8
-        self.instructionsTextView.layer.borderColor = UIColor.gray.cgColor
-        self.instructionsTextView.layer.borderWidth = 0.8
+        self.instructionsTextView.layer.borderColor = UIColor.lightGray.cgColor
+        self.instructionsTextView.layer.borderWidth = 0.3
         self.instructionsTextView.layer.cornerRadius = 8
     }
 
@@ -248,7 +248,7 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         let ingredients = ingredientsString.components(separatedBy: CharacterSet.newlines)
         let instructions = instructionsString.components(separatedBy: CharacterSet.newlines)
         
-        let dish = Dish(name: name, posterUID: posterUID, imageReference: imageReference, tags: tags, difficulty: difficulty, averageRating: nil, ingredients: ingredients, instructions: instructions)
+        let dish = Dish(name: name, posterUID: posterUID, imageReference: imageReference, tags: tags, difficulty: difficulty, ratings: nil, ingredients: ingredients, instructions: instructions)
         
         collection.addDocument(data: dish.dictionary)
         self.navigationController?.popViewController(animated: true)

@@ -10,7 +10,6 @@
 		1EE3A3B33E3A4D88AD0F813A /* Pods_CookWithMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798164FE3B7EA43B16755B7C /* Pods_CookWithMe.framework */; };
 		220197292153FD7C0002B6BE /* AddDishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220197282153FD7C0002B6BE /* AddDishViewController.swift */; };
 		225B2C0121523011008CB82B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225B2C0021523011008CB82B /* AppDelegate.swift */; };
-		225B2C0321523011008CB82B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225B2C0221523011008CB82B /* ViewController.swift */; };
 		225B2C0621523011008CB82B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 225B2C0421523011008CB82B /* Main.storyboard */; };
 		225B2C0B21523015008CB82B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 225B2C0921523015008CB82B /* LaunchScreen.storyboard */; };
 		22ADC823215388B200A8C760 /* Dish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ADC822215388B200A8C760 /* Dish.swift */; };
@@ -20,13 +19,13 @@
 		22BA14E621553A4B00EEA94C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA14E521553A4B00EEA94C /* LoginViewController.swift */; };
 		22BA14E821553A6000EEA94C /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA14E721553A6000EEA94C /* SignupViewController.swift */; };
 		22C2A286215692AF0050EBD2 /* DishBrowserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C2A285215692AF0050EBD2 /* DishBrowserTableViewCell.swift */; };
+		22C2A2882156BF070050EBD2 /* DishDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C2A2872156BF070050EBD2 /* DishDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		220197282153FD7C0002B6BE /* AddDishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDishViewController.swift; sourceTree = "<group>"; };
 		225B2BFD21523011008CB82B /* CookWithMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CookWithMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		225B2C0021523011008CB82B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		225B2C0221523011008CB82B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		225B2C0521523011008CB82B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		225B2C0A21523015008CB82B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		225B2C0C21523015008CB82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -37,6 +36,7 @@
 		22BA14E521553A4B00EEA94C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		22BA14E721553A6000EEA94C /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		22C2A285215692AF0050EBD2 /* DishBrowserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishBrowserTableViewCell.swift; sourceTree = "<group>"; };
+		22C2A2872156BF070050EBD2 /* DishDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishDetailViewController.swift; sourceTree = "<group>"; };
 		798164FE3B7EA43B16755B7C /* Pods_CookWithMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CookWithMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE35D9DE6F1E78C389049192 /* Pods-CookWithMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CookWithMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-CookWithMe/Pods-CookWithMe.release.xcconfig"; sourceTree = "<group>"; };
 		D679FC8472B1E30DFAC89E48 /* Pods-CookWithMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CookWithMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CookWithMe/Pods-CookWithMe.debug.xcconfig"; sourceTree = "<group>"; };
@@ -79,7 +79,6 @@
 				22C2A2842156927E0050EBD2 /* View */,
 				22C2A2832156925C0050EBD2 /* Model */,
 				225B2C0021523011008CB82B /* AppDelegate.swift */,
-				225B2C0221523011008CB82B /* ViewController.swift */,
 				22ADC8252153980900A8C760 /* Assets.xcassets */,
 				225B2C0421523011008CB82B /* Main.storyboard */,
 				225B2C0921523015008CB82B /* LaunchScreen.storyboard */,
@@ -96,6 +95,7 @@
 				22BA14E721553A6000EEA94C /* SignupViewController.swift */,
 				22ADC8292153AFF900A8C760 /* DishBrowserTableViewController.swift */,
 				220197282153FD7C0002B6BE /* AddDishViewController.swift */,
+				22C2A2872156BF070050EBD2 /* DishDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -269,8 +269,8 @@
 				22C2A286215692AF0050EBD2 /* DishBrowserTableViewCell.swift in Sources */,
 				22BA14E621553A4B00EEA94C /* LoginViewController.swift in Sources */,
 				22BA14E821553A6000EEA94C /* SignupViewController.swift in Sources */,
+				22C2A2882156BF070050EBD2 /* DishDetailViewController.swift in Sources */,
 				22ADC823215388B200A8C760 /* Dish.swift in Sources */,
-				225B2C0321523011008CB82B /* ViewController.swift in Sources */,
 				22ADC82A2153AFF900A8C760 /* DishBrowserTableViewController.swift in Sources */,
 				225B2C0121523011008CB82B /* AppDelegate.swift in Sources */,
 				220197292153FD7C0002B6BE /* AddDishViewController.swift in Sources */,

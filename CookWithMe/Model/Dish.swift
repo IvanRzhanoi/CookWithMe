@@ -19,7 +19,7 @@ struct Dish {
     var imageReference: String
     var tags: [String]
     var difficulty: Int
-    var averageRating: Float?
+    var ratings: [Float]?
     var ingredients: [String]
     var instructions: [String]
     
@@ -29,7 +29,7 @@ struct Dish {
             "imageReference": imageReference,
             "tags": tags,
             "difficulty": difficulty,       // From 1 to 5
-            "averageRating": averageRating as Any, // From 1 to 5
+            "ratings": ratings ?? [2.5], // From 1 to 5
             "ingredients": ingredients,
             "instructions": instructions
         ]
@@ -50,9 +50,9 @@ extension Dish: DocumentSerializable {
         let posterUID = dictionary["posterUID"] as? String
         let posterUIDChecked: String = posterUID ?? "none"
         
-        let averageRating = dictionary["averageRating"] as? Float
-        let averageRatingChecked: Float = averageRating ?? 2.5
+        let ratings = dictionary["ratings"] as? [Float]
+        let ratingsChecked: [Float] = ratings ?? [2.5]
         
-        self.init(name: name, posterUID: posterUIDChecked, imageReference: imageReference, tags: tags, difficulty: difficulty, averageRating: averageRatingChecked, ingredients: ingredients, instructions: instructions)
+        self.init(name: name, posterUID: posterUIDChecked, imageReference: imageReference, tags: tags, difficulty: difficulty, ratings: ratingsChecked, ingredients: ingredients, instructions: instructions)
     }
 }
