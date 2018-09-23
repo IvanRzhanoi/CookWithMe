@@ -182,7 +182,7 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
         
         guard let uid = KeychainWrapper.standard.string(forKey: "uid") else {
-            displayAlertMessage(messageToDisplay: "Couldn't get your used identification. Maybe you are not logged in")
+            displayAlertMessage(messageToDisplay: "Couldn't get your user identification. Maybe you are not logged in")
             return
         }
         

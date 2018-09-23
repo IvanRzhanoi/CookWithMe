@@ -14,6 +14,7 @@ class DishBrowserTableViewController: UITableViewController {
     
     var database: Firestore!
     var selectedDishDetails: Dish!
+    var document: DocumentSnapshot!
     var selectedDishImage: UIImage!
     
     let backgroundView = UIImageView()
@@ -72,13 +73,14 @@ class DishBrowserTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let currentCell = tableView.cellForRow(at: indexPath)
-        
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
         selectedDishDetails = dishes[indexPath.row]
-        selectedDishImage = (currentCell as! DishBrowserTableViewCell).dishImageView.image
-        
+        document = documents[indexPath.row]
         performSegue(withIdentifier: "toDishDetail", sender: nil)
+        
+// Not used at the moment. Instead we fetch the new image
+//        let currentCell = tableView.cellForRow(at: indexPath)
+//        selectedDishImage = (currentCell as! DishBrowserTableViewCell).dishImageView.image
     }
     
     
@@ -94,7 +96,7 @@ class DishBrowserTableViewController: UITableViewController {
                 return
             }
             let models = snapshot.documents.map { (document) -> Dish in
-                print(document)
+//                print(document)
                 if let model = Dish(dictionary: document.data()) {
                     return model
                 } else {
@@ -102,6 +104,7 @@ class DishBrowserTableViewController: UITableViewController {
                     fatalError("Unable to initialize type \(Dish.self) with dictionary \(document.data())")
                 }
             }
+            
             self.dishes = models
             self.documents = snapshot.documents
             
@@ -139,6 +142,7 @@ class DishBrowserTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationViewController = segue.destination as? DishDetailViewController {
             destinationViewController.dish = selectedDishDetails
+            destinationViewController.document = document
 //            destinationViewController.dishImage = selectedDishImage
         }
     }

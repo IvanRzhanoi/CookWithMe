@@ -86,10 +86,10 @@
 		225B2BFF21523011008CB82B /* CookWithMe */ = {
 			isa = PBXGroup;
 			children = (
+				225B2C0021523011008CB82B /* AppDelegate.swift */,
 				22BA14E421553A2700EEA94C /* Controller */,
 				22C2A2842156927E0050EBD2 /* View */,
 				22C2A2832156925C0050EBD2 /* Model */,
-				225B2C0021523011008CB82B /* AppDelegate.swift */,
 				22ADC8252153980900A8C760 /* Assets.xcassets */,
 				225B2C0421523011008CB82B /* Main.storyboard */,
 				225B2C0921523015008CB82B /* LaunchScreen.storyboard */,

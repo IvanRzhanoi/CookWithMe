@@ -76,31 +76,31 @@ class RestaurantBrowserTableViewController: UITableViewController, CLLocationMan
     
     // https://developer.foursquare.com/docs/search/recommendations
     func searchRestaurants() {
-        // TODO: Implement search by all the tags
-        tags[0] = "ChineseRestaurant"
         
-        let url = "https://api.foursquare.com/v2/search/recommendations?ll=\(currentLocation.latitude),\(currentLocation.longitude)&v=20160607&intent=\(tags[0])&limit=15&client_id=\(client_id)&client_secret=\(client_secret)"
-        
-        let request = NSMutableURLRequest(url: URL(string: url)!)
-        let session = URLSession.shared
-        
-        request.httpMethod = "GET"
-        
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        
-        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, err -> Void in
-            
-            let json = JSON(data: data!)
-            self.searchResults = json["response"]["group"]["results"].arrayValue
-            
-            DispatchQueue.main.async {
-                self.tableView.isHidden = false
-                self.tableView.reloadData()
-            }
-        })
-        
-        task.resume()
+        // multiple requests for different tags
+        for tag in tags {
+            let url = "https://api.foursquare.com/v2/search/recommendations?ll=\(currentLocation.latitude),\(currentLocation.longitude)&v=20160607&query=\(tag)&limit=15&client_id=\(client_id)&client_secret=\(client_secret)"
+
+            let request = NSMutableURLRequest(url: URL(string: url)!)
+            let session = URLSession.shared
+
+            request.httpMethod = "GET"
+
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+            let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, err -> Void in
+
+                let json = JSON(data: data!)
+                self.searchResults.append(contentsOf: json["response"]["group"]["results"].arrayValue)
+
+                DispatchQueue.main.async {
+                    self.tableView.isHidden = false
+                    self.tableView.reloadData()
+                }
+            })
+            task.resume()
+        }
     }
 
     // MARK: - Table view data source
@@ -115,8 +115,10 @@ class RestaurantBrowserTableViewController: UITableViewController, CLLocationMan
         let cell = tableView.dequeueReusableCell(withIdentifier: "restaurantCell") as! RestaurantBrowserTableViewCell
         
         cell.title.text = searchResults[(indexPath as NSIndexPath).row]["venue"]["name"].string
-//        cell.rating.text = String(format: "%.1f", searchResults[(indexPath as NSIndexPath).row]["venue"]["rating"].doubleValue) + "⭐️"
-//        cell.distance.text = "\(searchResults[(indexPath as NSIndexPath).row]["venue"]["location"]["distance"].intValue)m"
+        cell.distance.text = "\(searchResults[(indexPath as NSIndexPath).row]["venue"]["location"]["distance"].intValue) m"
+        
+        // Can't get ratings at the moment
+//        cell.rating.text = String(format: "%.1f", searchResults[(indexPath as NSIndexPath).row]["venue"]["rating"].doubleValue) + " ⭐️"
 //        cell.address.text = searchResults[(indexPath as NSIndexPath).row]["venue"]["location"]["address"].string
         
         return cell
