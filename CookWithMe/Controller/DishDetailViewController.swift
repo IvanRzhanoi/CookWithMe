@@ -8,9 +8,31 @@
 
 import UIKit
 import FirebaseStorage
+import CoreLocation
 
 
-class DishDetailViewController: UIViewController {
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l < r
+    case (nil, _?):
+        return true
+    default:
+        return false
+    }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l > r
+    default:
+        return rhs < lhs
+    }
+}
+
+
+class DishDetailViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var dishNameNavigationItem: UINavigationItem!
     @IBOutlet weak var dishImageView: UIImageView!
@@ -22,6 +44,10 @@ class DishDetailViewController: UIViewController {
     
     var dish: Dish!
     var dishImage: UIImage!
+    
+    let locationManager = CLLocationManager()
+    var currentLocation:CLLocationCoordinate2D!
+    var flag = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +74,43 @@ class DishDetailViewController: UIViewController {
         averageRatingLabel.text = String(calculateMedian(array: dish.ratings!))
         ingredientsTextView.text = dish.ingredients.joined(separator: "\n")
         instructionsTextView.text = dish.instructions.joined(separator: "\n")
+        
+        // set up location manager
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+    }
+    
+    // Find where the user is
+    func getCurrentLocation() {
+        // check if access is granted
+        if CLLocationManager.locationServicesEnabled() {
+            switch(CLLocationManager.authorizationStatus()) {
+            case .authorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+            default:
+                showLocationAlert()
+            }
+        } else {
+            showLocationAlert()
+        }
+    }
+    
+    // MARK: - Location manager delegate
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // show the activity indicator
+        
+        if locations.last?.timestamp.timeIntervalSinceNow < -30.0 || locations.last?.horizontalAccuracy > 80 {
+            return
+        }
+        
+        // set a flag so segue is only called once
+        if flag {
+            currentLocation = locations.last?.coordinate
+            locationManager.stopUpdatingLocation()
+            flag = false
+            performSegue(withIdentifier: "toRestaurantBrowser", sender: self)
+        }
     }
 
     func calculateMedian(array: [Float]) -> Float {
@@ -59,15 +122,31 @@ class DishDetailViewController: UIViewController {
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func orderFood(_ sender: Any) {
+        locationManager.requestWhenInUseAuthorization()
+        flag = true
+        getCurrentLocation()
     }
-    */
+    
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Pass the latitude and longitude to the new view controller
+        if segue.identifier == "toRestaurantBrowser" {
+            let destinationViewController = segue.destination as! RestaurantBrowserTableViewController
+            destinationViewController.currentLocation = currentLocation
+            destinationViewController.tags = dish.ingredients
+//            print(currentLocation)
+        }
+     
+    }
 
+    // MARK: - Helpers
+    
+    func showLocationAlert() {
+        let alert = UIAlertController(title: "Location Disabled", message: "Please enable location for CookWithMe", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }

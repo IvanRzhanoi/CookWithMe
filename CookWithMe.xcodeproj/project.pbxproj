@@ -12,6 +12,11 @@
 		225B2C0121523011008CB82B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225B2C0021523011008CB82B /* AppDelegate.swift */; };
 		225B2C0621523011008CB82B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 225B2C0421523011008CB82B /* Main.storyboard */; };
 		225B2C0B21523015008CB82B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 225B2C0921523015008CB82B /* LaunchScreen.storyboard */; };
+		228D99E42157D2CD00D2A49C /* RestaurantMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228D99E32157D2CD00D2A49C /* RestaurantMapViewController.swift */; };
+		228D99E62157D5BA00D2A49C /* RestaurantBrowserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228D99E52157D5BA00D2A49C /* RestaurantBrowserTableViewController.swift */; };
+		228D99E82157D64F00D2A49C /* RestaurantBrowserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228D99E72157D64F00D2A49C /* RestaurantBrowserTableViewCell.swift */; };
+		228D99EA2157DCC900D2A49C /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228D99E92157DCC900D2A49C /* SwiftyJSON.swift */; };
+		228D99EC2157F58900D2A49C /* RestaurantPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228D99EB2157F58900D2A49C /* RestaurantPin.swift */; };
 		22ADC823215388B200A8C760 /* Dish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ADC822215388B200A8C760 /* Dish.swift */; };
 		22ADC8262153980900A8C760 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22ADC8252153980900A8C760 /* Assets.xcassets */; };
 		22ADC8282153A4BA00A8C760 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22ADC8272153A4BA00A8C760 /* GoogleService-Info.plist */; };
@@ -29,6 +34,12 @@
 		225B2C0521523011008CB82B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		225B2C0A21523015008CB82B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		225B2C0C21523015008CB82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		228D99E12157D25E00D2A49C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		228D99E32157D2CD00D2A49C /* RestaurantMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantMapViewController.swift; sourceTree = "<group>"; };
+		228D99E52157D5BA00D2A49C /* RestaurantBrowserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantBrowserTableViewController.swift; sourceTree = "<group>"; };
+		228D99E72157D64F00D2A49C /* RestaurantBrowserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantBrowserTableViewCell.swift; sourceTree = "<group>"; };
+		228D99E92157DCC900D2A49C /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = ../../../mrJitters/mrJitters/SwiftyJSON.swift; sourceTree = "<group>"; };
+		228D99EB2157F58900D2A49C /* RestaurantPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantPin.swift; sourceTree = "<group>"; };
 		22ADC822215388B200A8C760 /* Dish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dish.swift; sourceTree = "<group>"; };
 		22ADC8252153980900A8C760 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22ADC8272153A4BA00A8C760 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -96,6 +107,8 @@
 				22ADC8292153AFF900A8C760 /* DishBrowserTableViewController.swift */,
 				220197282153FD7C0002B6BE /* AddDishViewController.swift */,
 				22C2A2872156BF070050EBD2 /* DishDetailViewController.swift */,
+				228D99E52157D5BA00D2A49C /* RestaurantBrowserTableViewController.swift */,
+				228D99E32157D2CD00D2A49C /* RestaurantMapViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -104,6 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				22ADC822215388B200A8C760 /* Dish.swift */,
+				228D99E92157DCC900D2A49C /* SwiftyJSON.swift */,
+				228D99EB2157F58900D2A49C /* RestaurantPin.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -112,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				22C2A285215692AF0050EBD2 /* DishBrowserTableViewCell.swift */,
+				228D99E72157D64F00D2A49C /* RestaurantBrowserTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -119,6 +135,7 @@
 		51B72D35BF9F3833DBAAD4AD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				228D99E12157D25E00D2A49C /* MapKit.framework */,
 				798164FE3B7EA43B16755B7C /* Pods_CookWithMe.framework */,
 			);
 			name = Frameworks;
@@ -266,10 +283,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				228D99E82157D64F00D2A49C /* RestaurantBrowserTableViewCell.swift in Sources */,
 				22C2A286215692AF0050EBD2 /* DishBrowserTableViewCell.swift in Sources */,
+				228D99E62157D5BA00D2A49C /* RestaurantBrowserTableViewController.swift in Sources */,
+				228D99EA2157DCC900D2A49C /* SwiftyJSON.swift in Sources */,
 				22BA14E621553A4B00EEA94C /* LoginViewController.swift in Sources */,
 				22BA14E821553A6000EEA94C /* SignupViewController.swift in Sources */,
 				22C2A2882156BF070050EBD2 /* DishDetailViewController.swift in Sources */,
+				228D99E42157D2CD00D2A49C /* RestaurantMapViewController.swift in Sources */,
+				228D99EC2157F58900D2A49C /* RestaurantPin.swift in Sources */,
 				22ADC823215388B200A8C760 /* Dish.swift in Sources */,
 				22ADC82A2153AFF900A8C760 /* DishBrowserTableViewController.swift in Sources */,
 				225B2C0121523011008CB82B /* AppDelegate.swift in Sources */,
