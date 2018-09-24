@@ -76,13 +76,14 @@ class DishBrowserTableViewController: UITableViewController, FavoriteButtonDeleg
         document = documents[indexPath.row]
         performSegue(withIdentifier: "toDishDetail", sender: nil)
         
-// Not used at the moment. Instead we fetch the new image
+//      Not used at the moment. Instead we fetch the new image
 //        let currentCell = tableView.cellForRow(at: indexPath)
 //        selectedDishImage = (currentCell as! DishBrowserTableViewCell).dishImageView.image
     }
     
     
     // MARK: - Firestore
+    
     fileprivate func observeQuery() {
         guard let query = query else { return }
         stopObserving()
@@ -156,18 +157,6 @@ class DishBrowserTableViewController: UITableViewController, FavoriteButtonDeleg
                 }
             }
         }
-//
-//        db.collection("dishes").document(document.documentID).getDocument{ (document, error) in
-//            if let document = document, document.exists {
-//                let dataDescription = Dish(dictionary: document.data()!)
-//                if let rating = dataDescription?.ratings![uid] {
-//                    self.ratingTextField.text = String(rating)
-//                }
-//            } else {
-//                print("Document does not exist")
-//            }
-//        }
-//        db.collection("dishes").document(document.documentID).setData(["favorites": [uid]], merge: true)
     }
     
     
