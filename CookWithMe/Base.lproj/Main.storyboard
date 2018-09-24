@@ -47,11 +47,11 @@
                                             <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <size key="shadowOffset" width="-1" height="1"/>
                                         </label>
-                                        <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jS9-KK-chG">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jS9-KK-chG">
                                             <rect key="frame" x="16" y="220" width="30" height="32"/>
                                             <state key="normal" image="heart_outlined"/>
                                             <connections>
-                                                <action selector="markFavorite:" destination="MpI-8E-7rT" eventType="touchUpInside" id="QUi-cL-78a"/>
+                                                <action selector="markFavorite:" destination="VD8-n2-y1P" eventType="touchUpInside" id="20d-df-d6F"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -69,7 +69,8 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="dishImageView" destination="C4A-yC-Uvp" id="cHB-FA-sak"/>
-                                    <outlet property="dishName" destination="FpG-Ds-4vZ" id="bqQ-fX-NSX"/>
+                                    <outlet property="dishNameLabel" destination="FpG-Ds-4vZ" id="tKh-Gx-S0B"/>
+                                    <outlet property="favoriteButton" destination="jS9-KK-chG" id="jaz-Ck-daj"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

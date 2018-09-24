@@ -8,13 +8,21 @@
 
 import UIKit
 import FirebaseStorage
+import SwiftKeychainWrapper
+
+protocol FavoriteButtonDelegate {
+    func favoriteTapped(at index:IndexPath)
+}
 
 class DishBrowserTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var dishName: UILabel!
+    @IBOutlet weak var dishNameLabel: UILabel!
     @IBOutlet weak var dishImageView: UIImageView!
+    @IBOutlet weak var favoriteButton: UIButton!
     
     var dish: Dish!
+    var delegate: FavoriteButtonDelegate!
+    var indexPath: IndexPath!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,7 +37,7 @@ class DishBrowserTableViewCell: UITableViewCell {
 
     func configureCell(dish: Dish) {
         self.dish = dish
-        dishName.text = dish.name
+        dishNameLabel.text = dish.name
         
 //        dishImage = dish.imageReference
         let reference = Storage.storage().reference(forURL: dish.imageReference)
@@ -44,5 +52,24 @@ class DishBrowserTableViewCell: UITableViewCell {
                 }
             }
         })
+        
+        // Check if the user marked it as favorite
+        guard let uid = KeychainWrapper.standard.string(forKey: "uid") else {
+            return
+        }
+        
+        if dish.favorites?[uid] != nil {
+            favoriteButton.setImage(#imageLiteral(resourceName: "heart_filled"), for: .normal)
+        }
+    }
+    
+    @IBAction func markFavorite(_ sender: UIButton) {
+//        favoriteButton.imageView?.image = #imageLiteral(resourceName: "heart_filled")
+        if favoriteButton.imageView?.image == #imageLiteral(resourceName: "heart_outlined") {
+            favoriteButton.setImage(#imageLiteral(resourceName: "heart_filled"), for: .normal)
+        } else {
+            favoriteButton.setImage(#imageLiteral(resourceName: "heart_outlined"), for: .normal)
+        }
+        self.delegate.favoriteTapped(at: indexPath)
     }
 }

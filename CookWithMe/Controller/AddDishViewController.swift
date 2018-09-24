@@ -248,7 +248,7 @@ class AddDishViewController: UIViewController, UIImagePickerControllerDelegate, 
         let ingredients = ingredientsString.components(separatedBy: CharacterSet.newlines)
         let instructions = instructionsString.components(separatedBy: CharacterSet.newlines)
         
-        let dish = Dish(name: name, posterUID: posterUID, imageReference: imageReference, tags: tags, difficulty: difficulty, ratings: nil, ingredients: ingredients, instructions: instructions)
+        let dish = Dish(name: name, posterUID: posterUID, imageReference: imageReference, tags: tags, difficulty: difficulty, ratings: nil, favorites: nil, ingredients: ingredients, instructions: instructions)
         
         collection.addDocument(data: dish.dictionary)
         self.navigationController?.popViewController(animated: true)

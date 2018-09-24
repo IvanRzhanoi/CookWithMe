@@ -179,18 +179,6 @@ class DishDetailViewController: UIViewController, CLLocationManagerDelegate, UIP
         }
     }
     
-    func displayAlertMessage(messageToDisplay: String) {
-        let alertController = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: .alert)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
-            // Code in this block will trigger when OK button tapped.
-            print("Ok button tapped");
-        }
-        
-        alertController.addAction(OKAction)
-        self.present(alertController, animated: true, completion:nil)
-    }
-    
     @IBAction func orderFood(_ sender: Any) {
         locationManager.requestWhenInUseAuthorization()
         flag = true
@@ -206,6 +194,7 @@ class DishDetailViewController: UIViewController, CLLocationManagerDelegate, UIP
         db.collection("dishes").document(document.documentID).setData(["ratings": [uid: Int(ratingTextField.text!)]], merge: true)
     }
     
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -219,6 +208,18 @@ class DishDetailViewController: UIViewController, CLLocationManagerDelegate, UIP
     }
 
     // MARK: - Helpers
+    
+    func displayAlertMessage(messageToDisplay: String) {
+        let alertController = UIAlertController(title: "Alert", message: messageToDisplay, preferredStyle: .alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
+            // Code in this block will trigger when OK button tapped.
+            print("Ok button tapped");
+        }
+        
+        alertController.addAction(OKAction)
+        self.present(alertController, animated: true, completion:nil)
+    }
     
     func showLocationAlert() {
         let alert = UIAlertController(title: "Location Disabled", message: "Please enable location for CookWithMe", preferredStyle: .alert)
